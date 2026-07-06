@@ -11,7 +11,9 @@ Importação **por escola**: registros de outras escolas no mesmo arquivo são i
 
 Pré-requisitos técnicos (INEP cadastrado, permissões, versão do i-Educar): [`INSTALL.md`](../INSTALL.md) e [`COMPATIBILIDADE.md`](COMPATIBILIDADE.md).
 
-Catálogo de formatos e slugs: [`FORMATOS-IMPORTACAO.md`](FORMATOS-IMPORTACAO.md).
+Catálogo de formatos: [`FORMATOS-IMPORTACAO.md`](FORMATOS-IMPORTACAO.md).
+
+**Censo 2026 — ordem cronológica e diferenças entre formatos:** [`FORMATOS-CENSO-2026.md`](FORMATOS-CENSO-2026.md).
 
 ## Matrícula Inicial
 
@@ -19,13 +21,7 @@ Sequência conforme [orientações INEP](https://www.gov.br/inep/pt-br/areas-de-
 
 1. **(Opcional)** Exporte pelo i-Educar e valide na análise de exportação antes de enviar ao INEP.
 2. **Identificação no INEP** — envie o arquivo e baixe o ZIP de retorno.
-3. **Importe no i-Educar** — escolha o menu conforme o arquivo:
-
-| Arquivo INEP | Menu (2026) |
-|--------------|-------------|
-| `RESULTADO_ENCONTRADO.txt` / `RESULTADO_CERTO.txt` | Identificação — Resultado encontrado |
-| `RESULTADO_PROVAVEIS.txt` | Identificação — Resultados prováveis |
-| `RESULTADO_SEMID.txt` | Identificação — Não encontrados |
+3. **Importe no i-Educar** — escolha o menu conforme o arquivo (ver tabela em [`FORMATOS-CENSO-2026.md`](FORMATOS-CENSO-2026.md#resumo-em-ordem-cronológica)):
 
 Em **2025**, use **Identificação INEP — Retorno de alunos** para resultados encontrados.
 

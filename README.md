@@ -23,7 +23,8 @@ Fluxo detalhado no portal INEP e no i-Educar: [`docs/USO.md`](docs/USO.md).
 |-----------|----------|
 | [`INSTALL.md`](INSTALL.md) | Instalação, migrations e solução de problemas |
 | [`docs/USO.md`](docs/USO.md) | Passo a passo operacional (Matrícula Inicial e Situação do Aluno) |
-| [`docs/FORMATOS-IMPORTACAO.md`](docs/FORMATOS-IMPORTACAO.md) | Menus, slugs, registros TXT e tabelas gravadas |
+| [`docs/FORMATOS-IMPORTACAO.md`](docs/FORMATOS-IMPORTACAO.md) | Slugs, registros TXT e tabelas gravadas |
+| [`docs/FORMATOS-CENSO-2026.md`](docs/FORMATOS-CENSO-2026.md) | Censo 2026: formatos em ordem cronológica e diferenças |
 | [`docs/INTEGRACAO.md`](docs/INTEGRACAO.md) | Provider, rotas, processos e dependências do app |
 | [`docs/COMPATIBILIDADE.md`](docs/COMPATIBILIDADE.md) | i-Educar 2.11/2.12, Laravel e PHP |
 | [`docs/REVISAO-E-LIMITACOES.md`](docs/REVISAO-E-LIMITACOES.md) | Auditoria técnica, fragilidades e checklist de produção |

@@ -8,6 +8,8 @@ Catálogo em `EducacensoImportFormatCatalog`. Rota de cada formato:
 
 Arquivos: **TXT** delimitado por pipe (`|`).
 
+**Censo 2026 em ordem cronológica** (diferenças entre os sete formatos, quando usar cada um): [`FORMATOS-CENSO-2026.md`](FORMATOS-CENSO-2026.md).
+
 ## Visão geral dos menus
 
 | Ano | Slug | Menu |
@@ -72,51 +74,21 @@ Compara `cod_escola_inep` do arquivo com `modules.educacenso_cod_escola` da esco
 
 ---
 
-## 2026 — Matrícula Inicial
+## 2026
 
-### `migracao-txt` (process `20073`)
+Detalhamento cronológico, diferenças entre formatos e árvore de decisão: [`FORMATOS-CENSO-2026.md`](FORMATOS-CENSO-2026.md).
 
-Igual ao 2025, layout Censo 2026.
+Referência rápida por slug:
 
-### `identificacao-retorno-txt` (process `20074`)
-
-Arquivos: `RESULTADO_ENCONTRADO.txt`, `RESULTADO_CERTO.txt`.
-
-### `identificacao-provaveis-txt` (process `20075`)
-
-Arquivo: `RESULTADO_PROVAVEIS.txt`. Mesmo parser; conferência manual obrigatória.
-
-### `identificacao-nao-encontrado-txt` (process `20076`)
-
-Arquivo: `RESULTADO_SEMID.txt`. Poucos registros importáveis na prática.
-
-### `inep-retorno-txt` (process `20077`)
-
-| | |
-|---|---|
-| Parser | `inep_retorno_txt` |
-| Registros | 20, 40, 50, 60 |
-| Origem | Retorno INEP pós-migração com códigos preenchidos |
-
----
-
-## 2026 — Situação do Aluno
-
-### `situacao-aluno-migracao-txt` (process `20078`)
-
-| | |
-|---|---|
-| Parser | `situacao_aluno_txt` |
-| Registros | 89, 90, 91 |
-| Grava | `pmieducar.matricula.aprovado` |
-
-Campos relevantes (retorno INEP, índices 0-based): reg. 90/91 — `[3]` INEP turma, `[4]` INEP aluno, `[7]` situação.
-
-Usa `convertSituationEducacensoToIeducar()` se o pacote Portabilis estiver instalado.
-
-### `situacao-aluno-identificacao-txt` (process `20079`)
-
-Parser `identificacao_retorno_txt` — retorno de identificação na 2ª etapa.
+| Slug | Parser | Grava principalmente |
+|------|--------|----------------------|
+| `migracao-txt` | `migracao_txt` | INEP turma, pessoa, servidor, matrícula (reg. 20–60) |
+| `identificacao-retorno-txt` | `identificacao_retorno_txt` | INEP aluno (encontrados) |
+| `identificacao-provaveis-txt` | `identificacao_retorno_txt` | INEP aluno (prováveis) |
+| `identificacao-nao-encontrado-txt` | `identificacao_retorno_txt` | INEP aluno (quando houver) |
+| `inep-retorno-txt` | `inep_retorno_txt` | INEP turma, servidor, matrícula (reg. 20, 40, 50, 60) |
+| `situacao-aluno-migracao-txt` | `situacao_aluno_txt` | Situação da matrícula (reg. 89–91) |
+| `situacao-aluno-identificacao-txt` | `identificacao_retorno_txt` | INEP aluno (2ª etapa) |
 
 ---
 
