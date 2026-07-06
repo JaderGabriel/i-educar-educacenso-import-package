@@ -1,159 +1,129 @@
 # Formatos de importação
 
-Catálogo dos formatos registrados em `EducacensoImportFormatCatalog`. Cada formato corresponde a um item de menu e a uma rota:
+Catálogo em `EducacensoImportFormatCatalog`. Rota de cada formato:
 
 ```text
 /educacenso/importacao/{ano}/{slug}
 ```
 
-Arquivos aceitos: **TXT** delimitado por pipe (`|`), codificação conforme layout INEP (sem acentos em campos exportados pelo INEP).
+Arquivos: **TXT** delimitado por pipe (`|`).
 
-## Resumo por ano
+## Visão geral dos menus
 
-| Ano | Qtd. formatos | Etapas |
-|-----|---------------|--------|
-| 2025 | 2 | Matrícula Inicial |
-| 2026 | 7 | Matrícula Inicial + Situação do Aluno |
+| Ano | Slug | Menu |
+|-----|------|------|
+| 2025 | `migracao-txt` | Migração TXT — Exportação INEP |
+| 2025 | `identificacao-retorno-txt` | Identificação INEP — Retorno de alunos |
+| 2026 | `migracao-txt` | Migração TXT — Exportação INEP |
+| 2026 | `identificacao-retorno-txt` | Identificação INEP — Resultado encontrado |
+| 2026 | `identificacao-provaveis-txt` | Identificação INEP — Resultados prováveis |
+| 2026 | `identificacao-nao-encontrado-txt` | Identificação INEP — Não encontrados |
+| 2026 | `inep-retorno-txt` | Retorno INEP — Códigos preenchidos |
+| 2026 | `situacao-aluno-migracao-txt` | Situação do Aluno — Migração TXT |
+| 2026 | `situacao-aluno-identificacao-txt` | Situação do Aluno — Identificação INEP |
 
-## 2025
+## Tabelas gravadas
 
-### `migracao-txt` — Migração TXT — Exportação INEP
+| Tabela | Conteúdo |
+|--------|----------|
+| `modules.educacenso_cod_aluno` | INEP do aluno |
+| `modules.educacenso_cod_docente` | INEP do servidor/docente |
+| `modules.educacenso_cod_turma` | INEP da turma |
+| `modules.educacenso_matricula` | INEP da matrícula (enturmação) |
+| `public.educacenso_imports` | Histórico (ano, escola, usuário) |
+| `pmieducar.matricula` | Situação (`aprovado`) na importação de Situação do Aluno |
 
-| Propriedade | Valor |
-|-------------|-------|
-| Process | `20071` |
-| Parser | `migracao_txt` |
-| Registros | 00, 10, 20, 30, 40, 50, 60 |
+Campo `fonte` nas tabelas INEP: `importacao-inep-{ano}` ou `importacao-identificacao-{ano}`.
 
-**Origem:** exportação do i-Educar ou arquivo retornado pelo INEP com layout completo da Matrícula Inicial.
+## Filtro por escola
 
-**Grava:**
+Compara `cod_escola_inep` do arquivo com `modules.educacenso_cod_escola` da escola selecionada. Linhas de outras escolas são **ignoradas**.
 
-| Registro | Campos utilizados | Tabela |
-|----------|-------------------|--------|
-| 20 | INEP escola [1], cod turma [2], INEP turma [3] | `educacenso_cod_turma` |
-| 30 | cod pessoa [2], INEP [3] | `educacenso_cod_aluno` / `educacenso_cod_docente` |
-| 40 | cod servidor [2], INEP gestor [3] | `educacenso_cod_docente` |
-| 50 | cod servidor [2], INEP docente [3] | `educacenso_cod_docente` |
-| 60 | idpes [2], INEP aluno [3], turma [4], INEP turma [5], matrícula INEP [6] | `educacenso_cod_aluno`, `educacenso_cod_turma`, `educacenso_matricula` |
-
-Índices são **zero-based** no array após `explode('|')`.
+> **Atenção:** se a escola não tiver INEP cadastrado, o filtro fica permissivo — ver [`REVISAO-E-LIMITACOES.md`](REVISAO-E-LIMITACOES.md).
 
 ---
 
-### `identificacao-retorno-txt` — Identificação INEP — Retorno de alunos
+## 2025
 
-| Propriedade | Valor |
-|-------------|-------|
-| Process | `20072` |
+### `migracao-txt` (process `20071`)
+
+| | |
+|---|---|
+| Parser | `migracao_txt` |
+| Registros | 00, 10, 20, 30, 40, 50, 60 |
+| Origem | Exportação i-Educar ou retorno INEP (layout Matrícula Inicial) |
+
+| Registro | Grava em |
+|----------|----------|
+| 20 | `educacenso_cod_turma` |
+| 30 | `educacenso_cod_aluno` / `educacenso_cod_docente` |
+| 40, 50 | `educacenso_cod_docente` |
+| 60 | `educacenso_cod_aluno`, `educacenso_cod_turma`, `educacenso_matricula` |
+
+Índices zero-based após `explode('|')`.
+
+### `identificacao-retorno-txt` (process `20072`)
+
+| | |
+|---|---|
 | Parser | `identificacao_retorno_txt` |
-
-**Origem:** `RESULTADO_ENCONTRADO.txt` ou linhas `30|...` / `cod_pessoa|cod_inep`.
-
-**Grava:** `modules.educacenso_cod_aluno` (aluno com matrícula na escola/ano).
+| Origem | `RESULTADO_ENCONTRADO.txt` |
+| Grava | `educacenso_cod_aluno` (somente alunos) |
 
 ---
 
 ## 2026 — Matrícula Inicial
 
-### `migracao-txt`
+### `migracao-txt` (process `20073`)
 
-Igual ao formato 2025, layout Censo Escolar **2026**. Process: `20073`.
+Igual ao 2025, layout Censo 2026.
 
-### `identificacao-retorno-txt` — Resultado encontrado
+### `identificacao-retorno-txt` (process `20074`)
 
-| Propriedade | Valor |
-|-------------|-------|
-| Process | `20074` |
-| Arquivos | `RESULTADO_ENCONTRADO.txt`, `RESULTADO_CERTO.txt` |
+Arquivos: `RESULTADO_ENCONTRADO.txt`, `RESULTADO_CERTO.txt`.
 
-### `identificacao-provaveis-txt` — Resultados prováveis
+### `identificacao-provaveis-txt` (process `20075`)
 
-| Propriedade | Valor |
-|-------------|-------|
-| Process | `20075` |
-| Arquivo | `RESULTADO_PROVAVEIS.txt` |
-| Parser | `identificacao_retorno_txt` |
+Arquivo: `RESULTADO_PROVAVEIS.txt`. Mesmo parser; conferência manual obrigatória.
 
-Mesmo parser do resultado encontrado. Uso sob responsabilidade da escola (conferência manual).
+### `identificacao-nao-encontrado-txt` (process `20076`)
 
-### `identificacao-nao-encontrado-txt` — Não encontrados
+Arquivo: `RESULTADO_SEMID.txt`. Poucos registros importáveis na prática.
 
-| Propriedade | Valor |
-|-------------|-------|
-| Process | `20076` |
-| Arquivo | `RESULTADO_SEMID.txt` |
+### `inep-retorno-txt` (process `20077`)
 
-Importa códigos quando presentes; na maioria dos casos haverá poucos ou nenhum registro importável.
-
-### `inep-retorno-txt` — Retorno INEP — Códigos preenchidos
-
-| Propriedade | Valor |
-|-------------|-------|
-| Process | `20077` |
+| | |
+|---|---|
 | Parser | `inep_retorno_txt` |
-| Registros | 20, 40, 50, 60 (ignora 30) |
-
-Arquivo retornado pelo Educacenso após processamento da migração, com campos INEP preenchidos pelo INEP.
+| Registros | 20, 40, 50, 60 |
+| Origem | Retorno INEP pós-migração com códigos preenchidos |
 
 ---
 
 ## 2026 — Situação do Aluno
 
-### `situacao-aluno-migracao-txt` — Migração TXT
+### `situacao-aluno-migracao-txt` (process `20078`)
 
-| Propriedade | Valor |
-|-------------|-------|
-| Process | `20078` |
+| | |
+|---|---|
 | Parser | `situacao_aluno_txt` |
 | Registros | 89, 90, 91 |
+| Grava | `pmieducar.matricula.aprovado` |
 
-**Layout (exportação INEP, índices 0-based):**
+Campos relevantes (retorno INEP, índices 0-based): reg. 90/91 — `[3]` INEP turma, `[4]` INEP aluno, `[7]` situação.
 
-| Registro | Campos relevantes |
-|----------|-------------------|
-| 89 | [1] INEP escola |
-| 90 | [2] INEP escola, [3] INEP turma, [4] INEP aluno, [7] situação Educacenso |
-| 91 | Idem reg. 90 (alunos admitidos após data de referência) |
+Usa `convertSituationEducacensoToIeducar()` se o pacote Portabilis estiver instalado.
 
-**Grava:** atualiza `pmieducar.matricula.aprovado` (e flags de enturmação para transferido/abandono/falecido).
+### `situacao-aluno-identificacao-txt` (process `20079`)
 
-Conversão de situação: usa `convertSituationEducacensoToIeducar()` quando disponível (pacote Portabilis Educacenso); caso contrário, mapeamento padrão embutido.
-
-### `situacao-aluno-identificacao-txt` — Identificação INEP
-
-| Propriedade | Valor |
-|-------------|-------|
-| Process | `20079` |
-| Parser | `identificacao_retorno_txt` |
-
-Retorno de identificação na 2ª etapa; grava códigos INEP de alunos.
+Parser `identificacao_retorno_txt` — retorno de identificação na 2ª etapa.
 
 ---
 
-## Filtro por escola
+## Adicionar formato/ano
 
-Para todos os formatos:
-
-1. Obtém `cod_escola_inep` da escola selecionada em `modules.educacenso_cod_escola`.
-2. Compara com o INEP da escola em cada linha do arquivo.
-3. Linhas de outras escolas são contadas como **ignoradas**.
-
-Turmas são validadas com `pmieducar.turma` (`ref_ref_cod_escola` + `ano`).
-
-## Fonte dos dados importados
-
-Campo `fonte` em tabelas INEP:
-
-| Contexto | Valor |
-|----------|-------|
-| Migração / retorno INEP | `importacao-inep-{ano}` |
-| Identificação | `importacao-identificacao-{ano}` |
-
-## Adicionar novo formato/ano
-
-1. Incluir definição em `src/Formats/EducacensoImportFormatCatalog.php`.
-2. Adicionar constante em `src/Process.php`.
-3. Implementar ou reutilizar `parserType` em `EducacensoImportService`.
-4. Criar migration de menu (ou estender migration existente).
-5. Documentar neste arquivo e no `README.md`.
+1. `EducacensoImportFormatCatalog.php`
+2. `Process.php`
+3. Parser em `EducacensoImportService`
+4. Migration de menu
+5. Atualizar este arquivo
