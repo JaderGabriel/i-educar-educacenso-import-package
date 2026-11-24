@@ -2,6 +2,12 @@
 
 > Pacote: `buriti/i-educar-educacenso-import-package` · TR **5.10** · Prioridade **P2**
 
+
+## Onda 1 (finalizada 2026-11-24)
+
+- [x] Matriz PoC / evidências / testes da onda
+- [ ] Ensaio UI roteiro R1 (humano)
+
 ## Backlog Laguna
 
 - [ ] Checklist 5.10.x
