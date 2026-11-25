@@ -8,6 +8,16 @@ Pacote Laravel para o [i-Educar](https://github.com/portabilis/i-educar) que imp
 
 Repositório: [github.com/JaderGabriel/i-educar-educacenso-import-package](https://github.com/JaderGabriel/i-educar-educacenso-import-package)
 
+## Compatibilidade
+
+| Produto | Versão |
+| --- | --- |
+| **i-Educar** | **2.12.x** (min. 2.12.0) |
+| **i-Diário** | Portabilis i-Diário (espelho Laguna) via API/SSO do core |
+| Pacote | `1.2.0` |
+
+Declarado em `composer.json` → `extra.ieducar` e `extra.idiario`.
+
 ## Uso rápido
 
 1. Instale o pacote — [`INSTALL.md`](INSTALL.md).

@@ -1,7 +1,7 @@
 {
     "name": "buriti/i-educar-educacenso-import-package",
     "description": "Importação de arquivos do Educacenso/INEP (migração e identificação) para o i-Educar.",
-    "version": "1.1.6",
+    "version": "1.2.0",
     "type": "library",
     "license": "GPL-2.0-or-later",
     "keywords": [
@@ -9,7 +9,10 @@
         "educacenso",
         "inep",
         "importacao",
-        "buriti"
+        "buriti",
+        "idiario",
+        "laguna",
+        "2.12"
     ],
     "authors": [
         {
@@ -35,9 +38,15 @@
         },
         "ieducar": {
             "compatible": [
-                "2.11",
                 "2.12"
-            ]
+            ],
+            "min": "2.12.0",
+            "notes": "Alvo exclusivo i-Educar 2.12 (PHP ≥ 8.3, Illuminate ^11|^12|^13)."
+        },
+        "idiario": {
+            "compatible": true,
+            "via": "API i-Educar 2.12 + SSO (IdiarioPortal)",
+            "notes": "Compatível com Portabilis i-Diário no espelho Laguna; frequência/notas via sync do core."
         }
     },
     "config": {
