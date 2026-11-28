@@ -1,46 +1,51 @@
-# buriti/i-educar-educacenso-import-package
+# Importação Educacenso / INEP
 
-Pacote Laravel para o [i-Educar](https://github.com/portabilis/i-educar) que importa arquivos **TXT do Educacenso/INEP** pela interface web: menus por ano e formato, filtro por escola e tela de resultados.
+Importa arquivos TXT do Educacenso pela interface web para sincronizar códigos INEP e situação de matrícula com cadastros já existentes.
 
-**Escopo:** sincroniza **códigos INEP** e **situação de matrícula** com cadastros já existentes no i-Educar. Não substitui a importação censitária completa do pacote Portabilis.
+Composer: `buriti/i-educar-educacenso-import-package`
 
-**Compatibilidade:** i-Educar **2.11** e **2.12** — ver [`docs/COMPATIBILIDADE.md`](docs/COMPATIBILIDADE.md).
+## Para que serve
 
-Repositório: [github.com/JaderGabriel/i-educar-educacenso-import-package](https://github.com/JaderGabriel/i-educar-educacenso-import-package)
+Acelera a conciliação anual com o Censo Escolar: menus por ano/formato, filtro por escola e tela de resultados — sem substituir a importação censitária completa do pacote Portabilis.
+
+## Desenho de funções
+
+| Função | Entrega |
+| --- | --- |
+| Importação por ano/formato | Fluxo web Matrícula Inicial e Situação do Aluno |
+| Filtro por escola | Processamento direcionado |
+| Sincronização INEP | Códigos e situação alinhados ao cadastro local |
+| Tela de resultados | Conferência do que foi atualizado / rejeitado |
+
+## Quem usa
+
+- Equipe de censo / secretaria escolar
+- SME (acompanhamento)
+
+## Integrações
+
+- Cadastros do núcleo i-Educar
+- Portal Educacenso (origem dos TXT)
 
 ## Compatibilidade
 
 | Produto | Versão |
 | --- | --- |
-| **i-Educar** | **2.12.x** (min. 2.12.0) |
-| **i-Diário** | Portabilis i-Diário (espelho Laguna) via API/SSO do core |
-| Pacote | `1.2.0` |
+| **i-Educar** | **2.12.x** |
+| **i-Diário** | Portabilis i-Diário (API / SSO do núcleo) |
+| Pacote | `1.2.1` |
 
-Declarado em `composer.json` → `extra.ieducar` e `extra.idiario`.
-
-## Uso rápido
-
-1. Instale o pacote — [`INSTALL.md`](INSTALL.md).
-2. Acesse **Educacenso → Importações → [Ano] → [Formato]**.
-3. Selecione escola e envie o TXT do [portal Educacenso](https://educacenso.inep.gov.br).
-4. Confira a tela de resultados.
-
-Fluxo detalhado no portal INEP e no i-Educar: [`docs/USO.md`](docs/USO.md).
+Declarado em `composer.json` → `extra.ieducar` / `extra.idiario`.
 
 ## Documentação
 
-| Documento | Conteúdo |
-|-----------|----------|
-| [`INSTALL.md`](INSTALL.md) | Instalação, migrations e solução de problemas |
-| [`docs/USO.md`](docs/USO.md) | Passo a passo operacional (Matrícula Inicial e Situação do Aluno) |
-| [`docs/FORMATOS-IMPORTACAO.md`](docs/FORMATOS-IMPORTACAO.md) | Slugs, registros TXT e tabelas gravadas |
-| [`docs/FORMATOS-CENSO-2026.md`](docs/FORMATOS-CENSO-2026.md) | Censo 2026: formatos em ordem cronológica e diferenças |
-| [`docs/INTEGRACAO.md`](docs/INTEGRACAO.md) | Provider, rotas, processos e dependências do app |
-| [`docs/COMPATIBILIDADE.md`](docs/COMPATIBILIDADE.md) | i-Educar 2.11/2.12, Laravel e PHP |
-| [`docs/REVISAO-E-LIMITACOES.md`](docs/REVISAO-E-LIMITACOES.md) | Auditoria técnica, fragilidades e checklist de produção |
+| Documento | Uso |
+| --- | --- |
+| [`INSTALL.md`](./INSTALL.md) | Instalação e troubleshooting |
+| [`docs/USO.md`](./docs/USO.md) | Passo a passo operacional |
+| [`docs/FORMATOS-IMPORTACAO.md`](./docs/FORMATOS-IMPORTACAO.md) | Slugs, registros e tabelas |
+| [`docs/COMPATIBILIDADE.md`](./docs/COMPATIBILIDADE.md) | Matriz de versões |
 
-Antes de usar em produção, leia a [revisão e limitações](docs/REVISAO-E-LIMITACOES.md).
+---
 
-## Licença
-
-GNU GPL v2.0 ou posterior — [`LICENSE`](LICENSE).
+Licença: **GPL-2.0-or-later** · Organização [i-Educar](https://github.com/i-Educar)
